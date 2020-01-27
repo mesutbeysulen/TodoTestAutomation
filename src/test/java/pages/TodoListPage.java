@@ -2,9 +2,11 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.BaseSetup;
@@ -32,7 +34,7 @@ public class TodoListPage extends BaseSetup {
     @AndroidFindBy(accessibility = "Yukarı git")
     public WebElement navBar;
 
-    @AndroidFindBy(id = "tasks_list")
+    @AndroidFindBy(id = "title")
     public List<WebElement> TitleList;
 
     @AndroidFindBy(id = "all")
@@ -44,18 +46,21 @@ public class TodoListPage extends BaseSetup {
     @AndroidFindBy(id = "completed")
     public WebElement ListCompleted;
 
-    @AndroidFindBy(id = "complete_checkbox")
-    public WebElement complete_checkbox;
+    @AndroidFindBy(id = "menu_filter")
+    public WebElement menu_filter;
+
+    @AndroidFindBy(id = "content")
+    public List<WebElement> content;
+
+    @AndroidFindBy(id = "complete")
+    public List<WebElement> complete_checkboxList;
 
     public void AddTask(){
         addTask.click();
     }
 
     public boolean TitleControl(String result){
-        if (titleHeader.getText().equals(result))
-            return true;
-        else
-            return false;
+        return titleHeader.getText().equals(result);
     }
 
     public void TodoTitleClick(){
@@ -69,9 +74,8 @@ public class TodoListPage extends BaseSetup {
 
     public int TitleCount(){
         int countTitle = 0;
-        String expected = "Title";
         for(WebElement el : TitleList){
-            if (el.getText().equalsIgnoreCase(expected))
+            if (el != null)
                 countTitle++;
         }
 
@@ -79,22 +83,24 @@ public class TodoListPage extends BaseSetup {
     }
 
     public boolean FilterActiveTaskControl(int count){
-        ListActive.click();
+        menu_filter.click();
+        content.get(1).click();
         return TitleCount() == count;
-
     }
 
-    public void CheckCompleteClick(){
-        complete_checkbox.click();
+    public void CheckCompleteClick(int check){
+        complete_checkboxList.get(check).click();
     }
 
     public boolean FilterCompletedTaskControl(int count){
-        ListCompleted.click();
+        menu_filter.click();
+        content.get(2).click();
         return TitleCount() == count;
     }
 
     public boolean FilterAllTaskControl(int count){
-        ListAll.click();
+        menu_filter.click();
+        content.get(0).click();
         return TitleCount() == count;
     }
 }

@@ -63,6 +63,7 @@ public class BaseSetup {
     public void ListAddTest(){
         NewTodoPage newTodoPage = new NewTodoPage(driver);
         TodoListPage todoListPage = new TodoListPage(driver);
+
         //Step one
         todoListPage.AddTask();
         if (newTodoPage.VerifyNewPage("Title"))
@@ -178,11 +179,13 @@ public class BaseSetup {
     @Test
     public void StatisticsPageControl() {
         TodoListPage todoListPage = new TodoListPage(driver);
+        int taskCount = todoListPage.TitleCount();
         StatisticsPage statisticsPage = new StatisticsPage(driver);
 
         todoListPage.navbarClick();
         statisticsPage.navBarStatisticsMenuClick();
-        if(statisticsPage.StatisticsPageTextActiveControl() == todoListPage.TitleCount())
+        int statisticsActiveCount = statisticsPage.StatisticsPageTextActiveControl();
+        if(taskCount==statisticsActiveCount)
             System.out.println("Statistics match success!");
         else
             System.out.println("Statistics match fail!");
@@ -205,9 +208,11 @@ public class BaseSetup {
         }
 
         for (int check=1;check<=(allTask/2);check++)
-            todoListPage.CheckCompleteClick();
+            todoListPage.CheckCompleteClick(check);
+
 
         boolean statusActive = todoListPage.FilterActiveTaskControl((allTask/2));
+
         if(statusActive)
             System.out.println("Active Task Count Check Successful!");
         else
@@ -254,11 +259,7 @@ public class BaseSetup {
             return result;
         }
 
-        *//**
-         * Takes screenshot of active screen
-         *
-         * @return ImageFileName
-         *//*
+        *//*
         public String takeScreenShot() {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 

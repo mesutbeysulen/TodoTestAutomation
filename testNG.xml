@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="C:\Users\MESUT\IdeaProjects\TodoTestAutomation\pom.xml">
+    <test verbose="2" name="C:\Users\MESUT\IdeaProjects\TodoTestAutomation\pom.xml">
         <classes>
             <class name="utils.BaseSetup">
                 <methods>
@@ -9,6 +9,7 @@
                     <include name="ListEditTest"/>
                     <include name="TaskDeleteTest"/>
                     <include name="StatisticsPageControl"/>
+                    <include name="FilterTaskListPage"/>
                 </methods>
             </class>
 
