@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import pages.*;
 
+import javax.sound.midi.Soundbank;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,19 +43,24 @@ public class BaseSetup {
 
 
     @BeforeTest
-    public static void Setup() throws MalformedURLException {
+    public static void Setup(){
+        try {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability("deviceName", "Galaxy S9+");
+            caps.setCapability("udid", "22520a632f017ece"); //DeviceId from "adb devices" command
+            caps.setCapability("platformName", "Android");
+            caps.setCapability("platformVersion", "9");
+            caps.setCapability("skipUnlock","true");
+            caps.setCapability("appPackage", "com.example.android.architecture.blueprints.todomvp.mock");
+            caps.setCapability("appActivity","com.example.android.architecture.blueprints.todoapp.tasks.TasksActivity");
+            caps.setCapability("noReset","false");
+            driver = new AndroidDriver<WebElement>(new URL("http://0.0.0.0:4723/wd/hub"),caps);
+            wait = new WebDriverWait(driver, 10);
+        }
+        catch (MalformedURLException mx){
+            System.out.println("Hatalı oluşturulmuş URL İstisnası!");
+        }
 
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("deviceName", "Galaxy S9+");
-        caps.setCapability("udid", "22520a632f017ece"); //DeviceId from "adb devices" command
-        caps.setCapability("platformName", "Android");
-        caps.setCapability("platformVersion", "9");
-        caps.setCapability("skipUnlock","true");
-        caps.setCapability("appPackage", "com.example.android.architecture.blueprints.todomvp.mock");
-        caps.setCapability("appActivity","com.example.android.architecture.blueprints.todoapp.tasks.TasksActivity");
-        caps.setCapability("noReset","false");
-        driver = new AndroidDriver<WebElement>(new URL("http://0.0.0.0:4723/wd/hub"),caps);
-        wait = new WebDriverWait(driver, 10);
     }
 
 

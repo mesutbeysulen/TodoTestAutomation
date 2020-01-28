@@ -5,6 +5,7 @@
         <classes>
             <class name="utils.BaseSetup">
                 <methods>
+                    <!-- Test Method Name Priority-->
                     <include name="ListAddTest"/>
                     <include name="ListEditTest"/>
                     <include name="TaskDeleteTest"/>
@@ -12,7 +13,6 @@
                     <include name="FilterTaskListPage"/>
                 </methods>
             </class>
-
         </classes>
     </test>
 </suite>
